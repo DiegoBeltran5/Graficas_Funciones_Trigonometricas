@@ -293,6 +293,17 @@
             transition: all 0.3s ease;
             margin-bottom: 30px;
         }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .activities-grid .resource-card {
+            margin-bottom: 0;
+        }
         
         .resource-card:hover {
             transform: translateY(-5px);
@@ -534,14 +545,6 @@
             color: #ffc107;
             margin: 0;
             font-size: 0.95em;
-        }
-
-        /* Activities Grid */
-        .activities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
         }
         
         .week-indicator {
@@ -906,37 +909,34 @@
             <div class="activities-grid">
                 <div class="resource-card">
                     <div class="resource-icon">🔬</div>
-                    <h3 class="resource-title">Laboratorio</h3>
-                    <h4 style="color: #ccc; margin-bottom: 15px; font-size: 1.2em;">SoundWaveLab</h4>
+                    <h3 class="resource-title">SoundWaveLab</h3>
                     <p class="resource-description">
-                        Experimenta con ondas sonoras y funciones trigonométricas en un laboratorio virtual interactivo. 
-                        Manipula frecuencias, amplitudes y observa cómo se comportan las ondas en tiempo real.
+                        Laboratorio interactivo para explorar las ondas sonoras y su relación con las funciones trigonométricas. 
+                        Experimenta con frecuencias, amplitudes y formas de onda.
                     </p>
                     <a href="https://trigonometry.info/SoundWaveLab/" target="_blank" class="resource-link">
                         Acceder al Laboratorio
                     </a>
                 </div>
-
+                
                 <div class="resource-card">
                     <div class="resource-icon">📖</div>
                     <h3 class="resource-title">Lectura 1</h3>
-                    <h4 style="color: #ccc; margin-bottom: 15px; font-size: 1.2em;">Proyecto de Bilingüismo</h4>
                     <p class="resource-description">
-                        Actividad de lectura comprensiva en inglés sobre gráficas de funciones trigonométricas. 
-                        Desarrolla tus habilidades de comprensión lectora mientras refuerzas conceptos matemáticos.
+                        Actividad de comprensión lectora enfocada en las aplicaciones de las funciones trigonométricas 
+                        en contextos reales y científicos.
                     </p>
                     <a href="#" class="resource-link placeholder" onclick="showPlaceholderMessage('lectura')">
-                        Acceder al Material (Próximamente)
+                        Acceder a la Lectura (Próximamente)
                     </a>
                 </div>
-
+                
                 <div class="resource-card">
                     <div class="resource-icon">🎯</div>
-                    <h3 class="resource-title">Simulacro 1</h3>
-                    <h4 style="color: #ccc; margin-bottom: 15px; font-size: 1.2em;">Prueba Saber</h4>
+                    <h3 class="resource-title">Simulacro 1. Prueba Saber</h3>
                     <p class="resource-description">
-                        Practica con preguntas tipo ICFES relacionadas con gráficas de funciones trigonométricas. 
-                        Prepárate para las Pruebas Saber 11° con ejercicios específicos del tema.
+                        Primera evaluación tipo ICFES sobre gráficas de funciones trigonométricas. 
+                        Prepárate para las Pruebas Saber 11° con preguntas específicas del tema.
                     </p>
                     <a href="#" class="resource-link placeholder" onclick="showPlaceholderMessage('simulacro')">
                         Acceder al Simulacro (Próximamente)
@@ -946,62 +946,10 @@
         </div>
     </section>
 
-    <!-- Sección de Bilingüismo (mantener la original) -->
-    <section class="resources-section" style="display: none;">
-        <div class="container">
-            <div class="resource-card">
-                <div class="resource-icon">📚</div>
-                <h3 class="resource-title">Proyecto de Bilingüismo</h3>
-                <p class="resource-description">
-                    Actividad de lectura comprensiva en inglés sobre funciones trigonométricas. 
-                    Desarrolla tus habilidades de comprensión lectora mientras refuerzas conceptos matemáticos.
-                </p>
-                <a href="#" class="resource-link placeholder" onclick="showPlaceholderMessage('bilingüismo')">
-                    Acceder al Material (Próximamente)
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección de Pruebas Saber (mantener la original) -->
-    <section class="resources-section" style="display: none;">
-        <div class="container">
-            <div class="resource-card">
-                <div class="resource-icon">📚</div>
-                <h3 class="resource-title">Proyecto de Bilingüismo</h3>
-                <p class="resource-description">
-                    Actividad de lectura comprensiva en inglés sobre funciones trigonométricas. 
-                    Desarrolla tus habilidades de comprensión lectora mientras refuerzas conceptos matemáticos.
-                </p>
-                <a href="#" class="resource-link placeholder" onclick="showPlaceholderMessage('bilingüismo')">
-                    Acceder al Material (Próximamente)
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección de Pruebas Saber -->
-    <section class="resources-section">
-        <div class="container">
-            <div class="resource-card">
-                <div class="resource-icon">🎯</div>
-                <h3 class="resource-title">Simulacro Pruebas Saber</h3>
-                <p class="resource-description">
-                    Practica con preguntas tipo ICFES relacionadas con gráficas de funciones trigonométricas. 
-                    Prepárate para las Pruebas Saber 11° con ejercicios específicos del tema.
-                </p>
-                <a href="#" class="resource-link placeholder" onclick="showPlaceholderMessage('simulacro')">
-                    Acceder al Simulacro (Próximamente)
-                </a>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer>
         <div class="container">
             <p>&copy; 2025 ST Trigonometry. Gráficas de Funciones Trigonométricas - Periodo 3, Semanas 1-2</p>
-            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">Incluye: Video conceptual • Exploración GeoGebra • Visualizador interactivo • SoundWaveLab • Actividades de evaluación</p>
         </div>
     </footer>
 
@@ -1297,10 +1245,12 @@
         // Función para mostrar mensaje de placeholder
         function showPlaceholderMessage(type) {
             let message = '';
-            if (type === 'bilingüismo' || type === 'lectura') {
-                message = '📚 El material de bilingüismo estará disponible próximamente.\n\nAquí encontrarás:\n• Lecturas en inglés sobre trigonometría\n• Ejercicios de comprensión\n• Vocabulario técnico matemático';
+            if (type === 'lectura') {
+                message = '📖 La Lectura 1 estará disponible próximamente.\n\nIncluirá:\n• Texto sobre aplicaciones de funciones trigonométricas\n• Preguntas de comprensión\n• Análisis de casos reales';
             } else if (type === 'simulacro') {
-                message = '🎯 El simulacro de Pruebas Saber estará disponible próximamente.\n\nIncluirá:\n• Preguntas tipo ICFES\n• Gráficas de funciones trigonométricas\n• Análisis de resultados';
+                message = '🎯 El Simulacro 1 de Pruebas Saber estará disponible próximamente.\n\nIncluirá:\n• Preguntas tipo ICFES\n• Gráficas de funciones trigonométricas\n• Análisis de resultados\n• Retroalimentación detallada';
+            } else if (type === 'bilingüismo') {
+                message = '📚 El material de bilingüismo estará disponible próximamente.\n\nAquí encontrarás:\n• Lecturas en inglés sobre trigonometría\n• Ejercicios de comprensión\n• Vocabulario técnico matemático';
             }
             alert(message);
         }
