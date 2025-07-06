@@ -3,838 +3,1324 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoundWave Lab - Laboratorio de Síntesis Musical</title>
+    <title>Gráficas de Funciones Trigonométricas - ST Trigonometry</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
-            color: #fff;
-            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { filter: drop-shadow(0 0 10px #00ffff); }
-            to { filter: drop-shadow(0 0 20px #ff00ff); }
-        }
-
-        .subtitle {
-            font-size: 1.2em;
-            color: #8892b0;
-            margin-bottom: 20px;
-        }
-
-        .main-panel {
-            background: rgba(26, 31, 58, 0.8);
-            border-radius: 20px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
-        .wave-display {
-            background: #0a0e27;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        canvas {
-            width: 100%;
-            height: 300px;
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        .controls-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .control-group {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 25px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .control-group:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
-            border-color: rgba(0, 255, 255, 0.3);
-        }
-
-        .control-group h3 {
-            color: #00ffff;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .slider-container {
-            margin-bottom: 20px;
-        }
-
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 14px;
-            color: #8892b0;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            outline: none;
-            -webkit-appearance: none;
-            cursor: pointer;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-        }
-
-        .play-button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
-            border: none;
-            border-radius: 10px;
+            background: #0a0a0a;
             color: white;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .play-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
-        }
-
-        .play-button:active {
-            transform: translateY(0);
-        }
-
-        .play-button.playing {
-            background: linear-gradient(45deg, #ff006e, #ff4500);
-        }
-
-        .equation-display {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 255, 255, 0.1));
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            font-size: 18px;
-            color: #00ffff;
-            margin-bottom: 20px;
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-            letter-spacing: 2px;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .piano-keys {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .piano-key {
-            width: 50px;
-            height: 120px;
-            background: white;
-            border: 1px solid #333;
-            border-radius: 0 0 5px 5px;
-            cursor: pointer;
-            transition: all 0.1s ease;
-            position: relative;
-        }
-
-        .piano-key:hover {
-            background: #f0f0f0;
-        }
-
-        .piano-key.active {
-            background: #00ffff;
-            transform: translateY(2px);
-        }
-
-        .piano-key.black {
-            width: 35px;
-            height: 80px;
-            background: #333;
-            margin-left: -17px;
-            margin-right: -17px;
-            z-index: 1;
-        }
-
-        .piano-key.black:hover {
-            background: #555;
-        }
-
-        .piano-key.black.active {
-            background: #ff00ff;
-        }
-
-        .key-label {
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-            color: #333;
-        }
-
-        .piano-key.black .key-label {
-            color: white;
-        }
-
-        .info-panel {
-            background: rgba(0, 255, 255, 0.1);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 30px;
-        }
-
-        .info-panel h4 {
-            color: #00ffff;
-            margin-bottom: 10px;
-        }
-
-        .info-panel p {
-            color: #8892b0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             line-height: 1.6;
         }
-
-        .spectrum-analyzer {
-            background: #0a0e27;
+        
+        /* Navegación */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 10px 0;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+        
+        .back-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 4em;
+            font-weight: 300;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out, titleGlow 3s ease-in-out infinite;
+        }
+        
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            color: #ccc;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+        
+        /* Sección de Contenido */
+        .content-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .content-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #2d3748;
+            text-align: center;
+        }
+        
+        .card-description {
+            color: #718096;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        /* Visualizador Interactivo */
+        .interactive-section {
+            padding: 80px 0;
+            background: #0a0a0a;
+            color: white;
+        }
+        
+        .graph-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            align-items: start;
+        }
+        
+        .control-group {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #ccc;
+            font-weight: 500;
+        }
+        
+        .control-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        
+        .control-group input[type="range"] {
+            -webkit-appearance: none;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            padding: 0;
+            margin: 10px 0;
+        }
+        
+        .control-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        
+        .control-group input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        
+        .control-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        #graphCanvas {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            background: #ffffff;
             border-radius: 15px;
-            padding: 20px;
-            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: block;
+            margin: 0 auto;
         }
-
-        #spectrumCanvas {
-            height: 150px;
+        
+        /* Secciones de recursos */
+        .resources-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
         }
-
+        
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .resource-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .resource-title {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .resource-description {
+            color: #ccc;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+        
+        .resource-link {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .resource-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
+        }
+        
+        .resource-link.placeholder {
+            background: linear-gradient(135deg, #718096 0%, #4a5568 100%);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .resource-link.placeholder:hover {
+            transform: none;
+            box-shadow: 0 10px 30px rgba(113, 128, 150, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 50px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(102, 126, 234, 0.6), 0 0 40px rgba(118, 75, 162, 0.4);
+            }
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            h1 {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .hero p {
+                font-size: 1.1em;
+            }
+            
+            .section-title {
                 font-size: 2em;
             }
             
-            .controls-section {
-                grid-template-columns: 1fr;
+            .video-container {
+                padding: 20px;
             }
             
-            .piano-key {
-                width: 40px;
+            .video-wrapper {
+                margin: 20px auto;
+            }
+            
+            .geogebra-wrapper {
+                margin: 20px auto;
+                padding: 30px;
+            }
+            
+            .geogebra-icon {
+                width: 100px;
                 height: 100px;
+                font-size: 3em;
             }
             
-            .piano-key.black {
-                width: 28px;
-                height: 65px;
+            .geogebra-title {
+                font-size: 1.5em;
+            }
+            
+            .geogebra-description {
+                font-size: 1em;
+            }
+            
+            .video-description {
+                font-size: 1em;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .concept-explanation {
+                padding: 15px;
+            }
+            
+            .explanation-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .explanation-item {
+                padding: 15px;
+            }
+            
+            .explanation-item h4 {
+                font-size: 1em;
+            }
+            
+            .activities-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            #graphCanvas {
+                height: 300px;
+            }
+            
+            .graph-container {
+                padding: 20px;
+            }
+            
+            .nav-container {
+                padding: 0 15px;
+            }
+            
+            .logo {
+                font-size: 1.5em;
             }
         }
+        
+        .formula-display {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            color: #667eea;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
 
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(0, 255, 255, 0.6);
+        .concept-explanation {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .explanation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .explanation-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .explanation-item h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .explanation-item p {
+            color: #ccc;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .explanation-item code {
+            background: rgba(102, 126, 234, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .note {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .note p {
+            color: #ffc107;
+            margin: 0;
+            font-size: 0.95em;
+        }
+
+        /* Activities Grid */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .week-indicator {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        /* Video Section */
+        .video-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            color: #2d3748;
+        }
+
+        .video-container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+            aspect-ratio: 16/9;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .video-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        .play-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            pointer-events: none;
-            animation: float 4s infinite linear;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
         }
 
-        @keyframes float {
-            from {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            to {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
+        .video-wrapper:hover .play-icon {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .video-info {
+            text-align: center;
+        }
+
+        .video-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .video-duration {
+            font-size: 1em;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        /* GeoGebra Section */
+        .geogebra-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+            aspect-ratio: 4/3;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .geogebra-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        .geogebra-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .geogebra-wrapper:hover .geogebra-icon {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .geogebra-info {
+            text-align: center;
+        }
+
+        .geogebra-title {
+            font-size: 1.8em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .geogebra-description {
+            font-size: 1.1em;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+            transition: all 0.3s ease;
+        }
+
+        .video-wrapper:hover .play-overlay {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
+        }
+
+        .video-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+        });
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+            transition: all 0.3s ease;
+        }
+
+        .video-wrapper:hover .play-overlay {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
+        }
+
+        .video-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .video-description {
+            color: #718096;
+            margin-top: 20px;
+            font-size: 1.1em;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>SoundWave Lab</h1>
-            <p class="subtitle">Laboratorio de Síntesis Musical con Funciones Trigonométricas</p>
-        </header>
+    <!-- Navegación -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">ST Trigonometry</a>
+            <a href="https://trigonometry.info/" class="back-button">← Volver</a>
+        </div>
+    </nav>
 
-        <div class="main-panel">
-            <div class="equation-display" id="equation">
-                <span style="font-size: 24px; font-style: italic;">f</span><span style="font-size: 24px;">(</span><span style="font-size: 22px; font-style: italic;">t</span><span style="font-size: 24px;">)</span>
-                <span style="font-size: 20px; margin: 0 5px;">=</span> 
-                <span style="font-size: 22px; font-style: italic;">A</span> 
-                <span style="font-size: 18px; margin: 0 3px;">·</span> 
-                <span style="font-size: 20px;">sen</span><span style="font-size: 24px;">(</span><span style="font-size: 22px;">2π</span> 
-                <span style="font-size: 18px; margin: 0 3px;">·</span> 
-                <span style="font-size: 22px; font-style: italic;">f</span><span style="font-size: 16px; vertical-align: sub;">(Hz)</span> 
-                <span style="font-size: 18px; margin: 0 3px;">·</span> 
-                <span style="font-size: 22px; font-style: italic;">t</span> 
-                <span style="font-size: 20px; margin: 0 5px;">+</span> 
-                <span style="font-size: 22px; font-style: italic;">φ</span><span style="font-size: 24px;">)</span>
-            </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Gráficas de Funciones Trigonométricas</h1>
+            <p>Explora las propiedades visuales de las funciones seno, coseno y tangente</p>
+            <div class="week-indicator">Semanas 1-2 • Periodo 3</div>
+        </div>
+    </section>
 
-            <div class="wave-display">
-                <canvas id="waveCanvas"></canvas>
-            </div>
-
-            <div class="spectrum-analyzer">
-                <h3 style="color: #00ffff; margin-bottom: 10px;">Analizador de Espectro</h3>
-                <canvas id="spectrumCanvas"></canvas>
-            </div>
-
-            <div class="controls-section">
-                <div class="control-group">
-                    <h3>
-                        <span>🎚️</span> Parámetros de Onda
-                    </h3>
-                    
-                    <div class="slider-container">
-                        <div class="slider-label">
-                            <span>Amplitud (A)</span>
-                            <span id="ampValue">0.5</span>
+    <!-- Contenido Teórico en Video -->
+    <section class="video-section">
+        <div class="container">
+            <h2 class="section-title">Conceptos Fundamentales</h2>
+            <div class="video-container">
+                <h3 style="color: #2d3748; margin-bottom: 20px; font-size: 1.5em;">
+                    Gráficas de Funciones Trigonométricas
+                </h3>
+                <div class="video-wrapper">
+                    <a href="https://www.youtube.com/watch?v=M6HKucF9Nj8&t=1110s" target="_blank">
+                        <div class="play-icon">
+                            ▶
                         </div>
-                        <input type="range" id="amplitude" min="0" max="1" step="0.01" value="0.5">
-                    </div>
-
-                    <div class="slider-container">
-                        <div class="slider-label">
-                            <span>Frecuencia (Hz)</span>
-                            <span id="freqValue">440</span>
+                        <div class="video-info">
+                            <div class="video-title">Gráficas de Funciones Trigonométricas</div>
+                            <div class="video-duration">Ver en YouTube (desde min 18:30)</div>
                         </div>
-                        <input type="range" id="frequency" min="100" max="1000" step="1" value="440">
-                    </div>
-
-                    <div class="slider-container">
-                        <div class="slider-label">
-                            <span>Fase (φ)</span>
-                            <span id="phaseValue">0</span>
-                        </div>
-                        <input type="range" id="phase" min="0" max="6.28" step="0.01" value="0">
-                    </div>
+                    </a>
                 </div>
-
-                <div class="control-group">
-                    <h3>
-                        <span>🎹</span> Control de Reproducción
-                    </h3>
-                    
-                    <button class="play-button" id="playButton">
-                        ▶ REPRODUCIR ONDA
-                    </button>
-
-                    <div class="slider-container" style="margin-top: 20px;">
-                        <div class="slider-label">
-                            <span>Tipo de Onda</span>
-                            <span id="waveTypeText">Seno</span>
-                        </div>
-                        <select id="waveType" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 5px;">
-                            <option value="sine">Seno</option>
-                            <option value="cosine">Coseno</option>
-                            <option value="square">Cuadrada</option>
-                            <option value="sawtooth">Sierra</option>
-                            <option value="triangle">Triangular</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="piano-keys" id="pianoKeys">
-                <!-- Las teclas se generarán dinámicamente -->
-            </div>
-
-            <div class="info-panel">
-                <h4>🎵 ¿Sabías que...?</h4>
-                <p>
-                    Las funciones trigonométricas son la base de todo sonido musical. La función seno representa la onda más pura, 
-                    mientras que los instrumentos reales crean ondas complejas combinando múltiples funciones senoidales. 
-                    La frecuencia determina el tono (nota musical) y la amplitud determina el volumen.
+                <p class="video-description">
+                    <strong>Haz clic en el video para verlo en YouTube</strong><br>
+                    Este video explica detalladamente las características principales de las gráficas de las funciones 
+                    trigonométricas (seno, coseno y tangente), incluyendo amplitud, periodo, frecuencia, fase y 
+                    transformaciones. El enlace te llevará directamente al minuto 18:30 donde inicia la explicación de las gráficas trigonométricas.
                 </p>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Recurso Interactivo GeoGebra -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Exploración Interactiva</h2>
+            <div class="video-container">
+                <h3 style="color: #2d3748; margin-bottom: 20px; font-size: 1.5em;">
+                    Funciones Trigonométricas - GeoGebra
+                </h3>
+                <div class="geogebra-wrapper">
+                    <a href="https://www.geogebra.org/m/HdnfNmwA" target="_blank">
+                        <div class="geogebra-icon">
+                            📐
+                        </div>
+                        <div class="geogebra-info">
+                            <div class="geogebra-title">Exploración Interactiva</div>
+                            <div class="geogebra-description">Abrir en GeoGebra</div>
+                        </div>
+                    </a>
+                </div>
+                <p class="video-description">
+                    <strong>Haz clic para abrir la herramienta interactiva de GeoGebra</strong><br>
+                    Explora las transformaciones de las funciones trigonométricas de manera dinámica. 
+                    Modifica los parámetros usando los controles deslizantes y observa cómo cambian las gráficas en tiempo real. 
+                    Esta herramienta profesional te permite experimentar con amplitud, periodo, fase y desplazamientos verticales.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visualizador Interactivo -->
+    <section class="interactive-section">
+        <div class="container">
+            <h2 class="section-title">Amplitud, Periodo, Desfase y Frecuencia</h2>
+            <h3 style="text-align: center; color: #ccc; font-size: 1.3em; margin-bottom: 40px; font-weight: 300;">
+                Visualizador Interactivo - Análisis Profundo
+            </h3>
+            <div class="graph-container">
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="functionType">Función:</label>
+                        <select id="functionType">
+                            <option value="sin">Seno</option>
+                            <option value="cos">Coseno</option>
+                            <option value="tan">Tangente</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="amplitude">Amplitud (A):</label>
+                        <input type="range" id="amplitude" min="0.1" max="3" step="0.1" value="1">
+                        <span id="amplitudeValue">1</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="frequency">Parámetro B (relacionado con frecuencia):</label>
+                        <input type="range" id="frequency" min="0.1" max="3" step="0.1" value="1">
+                        <span id="frequencyValue">1</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="phase">Desplazamiento Horizontal (C):</label>
+                        <input type="range" id="phase" min="-3.14" max="3.14" step="0.1" value="0">
+                        <span id="phaseValue">0</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="vertical">Desplazamiento Vertical (D):</label>
+                        <input type="range" id="vertical" min="-2" max="2" step="0.1" value="0">
+                        <span id="verticalValue">0</span>
+                    </div>
+                </div>
+                
+                <canvas id="graphCanvas" width="800" height="400"></canvas>
+                
+                <div class="formula-display" id="currentFormula">
+                    y = 1·sen(1(x + 0)) + 0
+                </div>
+                
+                <div class="concept-explanation">
+                    <div class="explanation-grid">
+                        <div class="explanation-item">
+                            <h4>📏 Periodo</h4>
+                            <p><strong>Definición:</strong> Distancia horizontal para completar un ciclo completo de la función.</p>
+                            <p><strong>Fórmula:</strong> <code>Periodo = 2π/|B|</code></p>
+                            <p><strong>Ejemplo:</strong> Si B = 2, entonces Periodo = π</p>
+                        </div>
+                        <div class="explanation-item">
+                            <h4>🌊 Frecuencia</h4>
+                            <p><strong>Definición:</strong> Número de ciclos completos en un intervalo de 2π unidades.</p>
+                            <p><strong>Fórmula:</strong> <code>Frecuencia = |B|/(2π)</code></p>
+                            <p><strong>Ejemplo:</strong> Si B = 2, entonces Frecuencia = 1/π ≈ 0.32</p>
+                        </div>
+                    </div>
+                    <div class="note">
+                        <p><strong>📝 Nota importante:</strong> El parámetro B no es directamente la frecuencia, sino que determina tanto el periodo como la frecuencia. A mayor valor de B, menor periodo y mayor frecuencia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Actividades -->
+    <section class="resources-section">
+        <div class="container">
+            <h2 class="section-title">Actividades</h2>
+            <div class="activities-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">🔬</div>
+                    <h3 class="resource-title">Laboratorio</h3>
+                    <h4 style="color: #ccc; margin-bottom: 15px; font-size: 1.2em;">SoundWaveLab</h4>
+                    <p class="resource-description">
+                        Experimenta con ondas sonoras y funciones trigonométricas en un laboratorio virtual interactivo. 
+                        Manipula frecuencias, amplitudes y observa cómo se comportan las ondas en tiempo real.
+                    </p>
+                    <a href="https://trigonometry.info/SoundWaveLab/" target="_blank" class="resource-link">
+                        Acceder al Laboratorio
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">📖</div>
+                    <h3 class="resource-title">Lectura 1</h3>
+                    <h4 style="color: #ccc; margin-bottom: 15px; font-size: 1.2em;">Proyecto de Bilingüismo</h4>
+                    <p class="resource-description">
+                        Actividad de lectura comprensiva en inglés sobre gráficas de funciones trigonométricas. 
+                        Desarrolla tus habilidades de comprensión lectora mientras refuerzas conceptos matemáticos.
+                    </p>
+                    <a href="#" class="resource-link placeholder" onclick="showPlaceholderMessage('lectura')">
+                        Acceder al Material (Próximamente)
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">🎯</div>
+                    <h3 class="resource-title">Simulacro 1</h3>
+                    <h4 style="color: #ccc; margin-bottom: 15px; font-size: 1.2em;">Prueba Saber</h4>
+                    <p class="resource-description">
+                        Practica con preguntas tipo ICFES relacionadas con gráficas de funciones trigonométricas. 
+                        Prepárate para las Pruebas Saber 11° con ejercicios específicos del tema.
+                    </p>
+                    <a href="#" class="resource-link placeholder" onclick="showPlaceholderMessage('simulacro')">
+                        Acceder al Simulacro (Próximamente)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Bilingüismo (mantener la original) -->
+    <section class="resources-section" style="display: none;">
+        <div class="container">
+            <div class="resource-card">
+                <div class="resource-icon">📚</div>
+                <h3 class="resource-title">Proyecto de Bilingüismo</h3>
+                <p class="resource-description">
+                    Actividad de lectura comprensiva en inglés sobre funciones trigonométricas. 
+                    Desarrolla tus habilidades de comprensión lectora mientras refuerzas conceptos matemáticos.
+                </p>
+                <a href="#" class="resource-link placeholder" onclick="showPlaceholderMessage('bilingüismo')">
+                    Acceder al Material (Próximamente)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Pruebas Saber (mantener la original) -->
+    <section class="resources-section" style="display: none;">
+        <div class="container">
+            <div class="resource-card">
+                <div class="resource-icon">📚</div>
+                <h3 class="resource-title">Proyecto de Bilingüismo</h3>
+                <p class="resource-description">
+                    Actividad de lectura comprensiva en inglés sobre funciones trigonométricas. 
+                    Desarrolla tus habilidades de comprensión lectora mientras refuerzas conceptos matemáticos.
+                </p>
+                <a href="#" class="resource-link placeholder" onclick="showPlaceholderMessage('bilingüismo')">
+                    Acceder al Material (Próximamente)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Pruebas Saber -->
+    <section class="resources-section">
+        <div class="container">
+            <div class="resource-card">
+                <div class="resource-icon">🎯</div>
+                <h3 class="resource-title">Simulacro Pruebas Saber</h3>
+                <p class="resource-description">
+                    Practica con preguntas tipo ICFES relacionadas con gráficas de funciones trigonométricas. 
+                    Prepárate para las Pruebas Saber 11° con ejercicios específicos del tema.
+                </p>
+                <a href="#" class="resource-link placeholder" onclick="showPlaceholderMessage('simulacro')">
+                    Acceder al Simulacro (Próximamente)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ST Trigonometry. Gráficas de Funciones Trigonométricas - Periodo 3, Semanas 1-2</p>
+            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">Incluye: Video conceptual • Exploración GeoGebra • Visualizador interactivo • SoundWaveLab • Actividades de evaluación</p>
+        </div>
+    </footer>
 
     <script>
-        // Web Audio API Setup
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        let oscillator = null;
-        let gainNode = null;
-        let analyser = null;
-        let isPlaying = false;
-
-        // Canvas Setup
-        const canvas = document.getElementById('waveCanvas');
-        const ctx = canvas.getContext('2d');
-        const spectrumCanvas = document.getElementById('spectrumCanvas');
-        const spectrumCtx = spectrumCanvas.getContext('2d');
-
-        // Controls
-        const ampSlider = document.getElementById('amplitude');
-        const freqSlider = document.getElementById('frequency');
-        const phaseSlider = document.getElementById('phase');
-        const playButton = document.getElementById('playButton');
-        const waveTypeSelect = document.getElementById('waveType');
-
-        // Value displays
-        const ampValue = document.getElementById('ampValue');
-        const freqValue = document.getElementById('freqValue');
-        const phaseValue = document.getElementById('phaseValue');
-        const equationDisplay = document.getElementById('equation');
-
-        // Resize canvases
-        function resizeCanvases() {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-            spectrumCanvas.width = spectrumCanvas.offsetWidth;
-            spectrumCanvas.height = spectrumCanvas.offsetHeight;
-        }
-        resizeCanvases();
-        window.addEventListener('resize', resizeCanvases);
-
-        // Update equation display
-        function updateEquation() {
-            const amp = ampSlider.value;
-            const freq = freqSlider.value;
-            const phase = (parseFloat(phaseSlider.value) / Math.PI).toFixed(2);
-            
-            let waveFunction = waveTypeSelect.value === 'cosine' ? 'cos' : 'sen';
-            
-            equationDisplay.innerHTML = `
-                <span style="font-size: 24px; font-style: italic;">f</span><span style="font-size: 24px;">(</span><span style="font-size: 22px; font-style: italic;">t</span><span style="font-size: 24px;">)</span>
-                <span style="font-size: 20px; margin: 0 5px;">=</span> 
-                <span style="font-size: 22px; color: #ff00ff;">${amp}</span> 
-                <span style="font-size: 18px; margin: 0 3px;">·</span> 
-                <span style="font-size: 20px;">${waveFunction}</span><span style="font-size: 24px;">(</span><span style="font-size: 22px;">2π</span> 
-                <span style="font-size: 18px; margin: 0 3px;">·</span> 
-                <span style="font-size: 22px; color: #00ff00;">${freq}</span><span style="font-size: 16px; vertical-align: sub;">Hz</span> 
-                <span style="font-size: 18px; margin: 0 3px;">·</span> 
-                <span style="font-size: 22px; font-style: italic;">t</span> 
-                <span style="font-size: 20px; margin: 0 5px;">+</span> 
-                <span style="font-size: 22px; color: #ffff00;">${phase}π</span><span style="font-size: 24px;">)</span>
-            `;
-        }
-
-        // Draw wave
-        function drawWave() {
-            const width = canvas.width;
-            const height = canvas.height;
-            const amp = parseFloat(ampSlider.value);
-            const freq = parseFloat(freqSlider.value);
-            const phase = parseFloat(phaseSlider.value);
-            
-            ctx.clearRect(0, 0, width, height);
-            
-            // Grid más tenue
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-            ctx.lineWidth = 1;
-            for (let i = 0; i <= 20; i++) {
-                ctx.beginPath();
-                ctx.moveTo(0, (height / 20) * i);
-                ctx.lineTo(width, (height / 20) * i);
-                ctx.stroke();
-                
-                ctx.beginPath();
-                ctx.moveTo((width / 20) * i, 0);
-                ctx.lineTo((width / 20) * i, height);
-                ctx.stroke();
-            }
-            
-            // Ejes principales del plano cartesiano
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-            ctx.lineWidth = 2;
-            
-            // Eje X (horizontal)
-            ctx.beginPath();
-            ctx.moveTo(0, height / 2);
-            ctx.lineTo(width, height / 2);
-            ctx.stroke();
-            
-            // Eje Y (vertical) - en el lado izquierdo
-            ctx.beginPath();
-            ctx.moveTo(40, 0);
-            ctx.lineTo(40, height);
-            ctx.stroke();
-            
-            // Etiquetas del eje Y (amplitud)
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-            ctx.font = '12px Arial';
-            ctx.textAlign = 'right';
-            ctx.textBaseline = 'middle';
-            
-            // Marcas y etiquetas de amplitud
-            const ampMarks = [1, 0.5, 0, -0.5, -1];
-            ampMarks.forEach(mark => {
-                const y = height / 2 - mark * height / 2 * 0.8;
-                
-                // Marca
-                ctx.beginPath();
-                ctx.moveTo(35, y);
-                ctx.lineTo(45, y);
-                ctx.stroke();
-                
-                // Etiqueta - omitir el 0.0 para evitar superposición
-                if (mark !== 0) {
-                    ctx.fillText(mark.toFixed(1), 30, y);
-                }
-            });
-            
-            // Etiquetas del eje X (tiempo en ms)
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'top';
-            
-            // Mostrar siempre 10ms de tiempo total
-            const totalTimeMs = 10; // milisegundos totales mostrados
-            const timeInterval = 1; // intervalo de 1ms entre marcas
-            
-            // Dibujar marcas de tiempo fijas cada 1ms
-            for (let ms = 0; ms <= totalTimeMs; ms += timeInterval) {
-                const x = 40 + (ms / totalTimeMs) * (width - 40);
-                
-                // Marca
-                ctx.beginPath();
-                ctx.moveTo(x, height / 2 - 5);
-                ctx.lineTo(x, height / 2 + 5);
-                ctx.stroke();
-                
-                // Etiqueta (mostrar cada 2ms para no saturar)
-                if (ms % 2 === 0) {
-                    ctx.fillText(ms + 'ms', x, height / 2 + 10);
-                }
-            }
-            
-            // Etiquetas de los ejes
-            ctx.font = '14px Arial';
-            ctx.fillStyle = '#00ffff';
-            
-            // Etiqueta eje Y
-            ctx.save();
-            ctx.translate(15, height / 2);
-            ctx.rotate(-Math.PI / 2);
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('Amplitud', 0, 0);
-            ctx.restore();
-            
-            // Etiqueta eje X
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'bottom';
-            ctx.fillText('Tiempo (ms)', width / 2, height - 5);
-            
-            // Wave
-            ctx.strokeStyle = '#00ffff';
-            ctx.lineWidth = 3;
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = '#00ffff';
-            ctx.beginPath();
-            
-            // Calcular cuántos períodos caben en 10ms según la frecuencia
-            const periodsInView = freq * totalTimeMs / 1000;
-            
-            for (let x = 40; x < width; x++) {
-                // Convertir posición x a tiempo en segundos
-                const timeInSeconds = ((x - 40) / (width - 40)) * (totalTimeMs / 1000);
-                // Calcular la fase de la onda en este punto temporal
-                const t = freq * timeInSeconds;
-                let y;
-                
-                switch(waveTypeSelect.value) {
-                    case 'sine':
-                        y = amp * Math.sin(2 * Math.PI * t + phase);
-                        break;
-                    case 'cosine':
-                        y = amp * Math.cos(2 * Math.PI * t + phase);
-                        break;
-                    case 'square':
-                        y = amp * (Math.sin(2 * Math.PI * t + phase) > 0 ? 1 : -1);
-                        break;
-                    case 'sawtooth':
-                        const sawPhase = (t + phase / (2 * Math.PI)) % 1;
-                        y = amp * (2 * sawPhase - 1);
-                        break;
-                    case 'triangle':
-                        const triPhase = (t + phase / (2 * Math.PI)) % 1;
-                        y = amp * (4 * Math.abs(triPhase - 0.5) - 1);
-                        break;
-                }
-                
-                const pixelY = height / 2 - y * height / 2 * 0.8;
-                
-                if (x === 40) {
-                    ctx.moveTo(x, pixelY);
-                } else {
-                    ctx.lineTo(x, pixelY);
-                }
-            }
-            
-            ctx.stroke();
-            ctx.shadowBlur = 0;
-            
-            // Punto de origen
-            ctx.fillStyle = '#ff00ff';
-            ctx.beginPath();
-            ctx.arc(40, height / 2, 5, 0, 2 * Math.PI);
-            ctx.fill();
-            
-            // Mostrar período en ms
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-            ctx.font = '12px Arial';
-            ctx.textAlign = 'left';
-            const periodMs = (1000 / freq).toFixed(2);
-            ctx.fillText(`Período: ${periodMs} ms`, width - 150, 30);
-        }
-
-        // Draw spectrum analyzer
-        function drawSpectrum() {
-            if (!analyser || !isPlaying) {
-                spectrumCtx.fillStyle = '#0a0e27';
-                spectrumCtx.fillRect(0, 0, spectrumCanvas.width, spectrumCanvas.height);
-                return;
-            }
-            
-            const bufferLength = analyser.frequencyBinCount;
-            const dataArray = new Uint8Array(bufferLength);
-            analyser.getByteFrequencyData(dataArray);
-            
-            spectrumCtx.fillStyle = '#0a0e27';
-            spectrumCtx.fillRect(0, 0, spectrumCanvas.width, spectrumCanvas.height);
-            
-            const barWidth = (spectrumCanvas.width / bufferLength) * 2.5;
-            let barHeight;
-            let x = 0;
-            
-            for (let i = 0; i < bufferLength; i++) {
-                barHeight = (dataArray[i] / 255) * spectrumCanvas.height;
-                
-                const gradient = spectrumCtx.createLinearGradient(0, spectrumCanvas.height - barHeight, 0, spectrumCanvas.height);
-                gradient.addColorStop(0, '#ff00ff');
-                gradient.addColorStop(1, '#00ffff');
-                
-                spectrumCtx.fillStyle = gradient;
-                spectrumCtx.fillRect(x, spectrumCanvas.height - barHeight, barWidth, barHeight);
-                
-                x += barWidth + 1;
-            }
-            
-            requestAnimationFrame(drawSpectrum);
-        }
-
-        // Play/stop sound
-        function toggleSound() {
-            if (isPlaying) {
-                stopSound();
+        // Navegación con scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
             } else {
-                playSound();
-            }
-        }
-
-        function playSound() {
-            oscillator = audioContext.createOscillator();
-            gainNode = audioContext.createGain();
-            analyser = audioContext.createAnalyser();
-            
-            oscillator.type = waveTypeSelect.value === 'cosine' ? 'sine' : waveTypeSelect.value;
-            oscillator.frequency.value = parseFloat(freqSlider.value);
-            gainNode.gain.value = parseFloat(ampSlider.value);
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(analyser);
-            analyser.connect(audioContext.destination);
-            
-            oscillator.start();
-            isPlaying = true;
-            playButton.textContent = '⏸ DETENER';
-            playButton.classList.add('playing');
-            
-            drawSpectrum();
-        }
-
-        function stopSound() {
-            if (oscillator) {
-                oscillator.stop();
-                oscillator = null;
-            }
-            isPlaying = false;
-            playButton.textContent = '▶ REPRODUCIR ONDA';
-            playButton.classList.remove('playing');
-        }
-
-        // Update values in real-time
-        function updateValues() {
-            ampValue.textContent = ampSlider.value;
-            freqValue.textContent = freqSlider.value;
-            phaseValue.textContent = (parseFloat(phaseSlider.value) / Math.PI).toFixed(2) + 'π';
-            
-            if (oscillator) {
-                oscillator.frequency.value = parseFloat(freqSlider.value);
-                gainNode.gain.value = parseFloat(ampSlider.value);
-            }
-            
-            updateEquation();
-            drawWave();
-        }
-
-        // Piano keys
-        const notes = [
-            { note: 'C4', freq: 261.63, white: true },
-            { note: 'C#4', freq: 277.18, white: false },
-            { note: 'D4', freq: 293.66, white: true },
-            { note: 'D#4', freq: 311.13, white: false },
-            { note: 'E4', freq: 329.63, white: true },
-            { note: 'F4', freq: 349.23, white: true },
-            { note: 'F#4', freq: 369.99, white: false },
-            { note: 'G4', freq: 392.00, white: true },
-            { note: 'G#4', freq: 415.30, white: false },
-            { note: 'A4', freq: 440.00, white: true },
-            { note: 'A#4', freq: 466.16, white: false },
-            { note: 'B4', freq: 493.88, white: true }
-        ];
-
-        function createPianoKeys() {
-            const pianoContainer = document.getElementById('pianoKeys');
-            pianoContainer.innerHTML = '';
-            
-            notes.forEach((note, index) => {
-                const key = document.createElement('div');
-                key.className = `piano-key ${note.white ? '' : 'black'}`;
-                key.innerHTML = `<span class="key-label">${note.note.replace('4', '').replace('5', '')}</span>`;
-                
-                key.addEventListener('mousedown', () => {
-                    freqSlider.value = note.freq;
-                    updateValues();
-                    if (!isPlaying) {
-                        playSound();
-                    }
-                    key.classList.add('active');
-                });
-                
-                key.addEventListener('mouseup', () => {
-                    key.classList.remove('active');
-                });
-                
-                key.addEventListener('mouseleave', () => {
-                    key.classList.remove('active');
-                });
-                
-                pianoContainer.appendChild(key);
-            });
-        }
-
-        // Event listeners
-        ampSlider.addEventListener('input', updateValues);
-        freqSlider.addEventListener('input', updateValues);
-        phaseSlider.addEventListener('input', updateValues);
-        playButton.addEventListener('click', toggleSound);
-        waveTypeSelect.addEventListener('change', () => {
-            updateValues();
-            if (isPlaying) {
-                stopSound();
-                playSound();
+                navbar.classList.remove('scrolled');
             }
         });
 
-        // Create floating particles
-        function createParticles() {
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 4 + 's';
-                particle.style.animationDuration = (4 + Math.random() * 4) + 's';
-                document.body.appendChild(particle);
+        // Visualizador de gráficas
+        let graphVisualizer;
+
+        class GraphVisualizer {
+            constructor() {
+                this.canvas = document.getElementById('graphCanvas');
+                if (!this.canvas) return;
+                
+                this.ctx = this.canvas.getContext('2d');
+                this.setupCanvas();
+                this.setupControls();
+                this.updateFormula();
+                this.draw();
+            }
+            
+            setupCanvas() {
+                // Establecer tamaño del canvas
+                this.canvas.width = 800;
+                this.canvas.height = 400;
+                this.width = 800;
+                this.height = 400;
+                
+                // Aplicar estilo CSS para responsive
+                this.canvas.style.width = '100%';
+                this.canvas.style.height = 'auto';
+                this.canvas.style.maxWidth = '800px';
+            }
+            
+            setupControls() {
+                const controls = ['amplitude', 'frequency', 'phase', 'vertical', 'functionType'];
+                controls.forEach(control => {
+                    const element = document.getElementById(control);
+                    if (element) {
+                        element.addEventListener('input', () => {
+                            this.updateValueDisplay(control);
+                            this.draw();
+                        });
+                        // Inicializar valores
+                        this.updateValueDisplay(control);
+                    }
+                });
+                
+                // Listener especial para el selector de función
+                const functionSelector = document.getElementById('functionType');
+                if (functionSelector) {
+                    functionSelector.addEventListener('change', () => {
+                        this.resetParameters();
+                        this.updateFormula();
+                        this.draw();
+                    });
+                }
+            }
+            
+            resetParameters() {
+                // Restablecer todos los parámetros a valores por defecto
+                const defaultValues = {
+                    amplitude: 1,
+                    frequency: 1,
+                    phase: 0,
+                    vertical: 0
+                };
+                
+                Object.keys(defaultValues).forEach(param => {
+                    const element = document.getElementById(param);
+                    const valueSpan = document.getElementById(param + 'Value');
+                    if (element && valueSpan) {
+                        element.value = defaultValues[param];
+                        
+                        // Formatear el valor mostrado según el parámetro
+                        let displayValue = defaultValues[param];
+                        if (param === 'phase') {
+                            displayValue = defaultValues[param] === 0 ? '0' : defaultValues[param].toFixed(1);
+                        }
+                        
+                        valueSpan.textContent = displayValue;
+                    }
+                });
+            }
+            
+            updateValueDisplay(control) {
+                const element = document.getElementById(control);
+                const valueSpan = document.getElementById(control + 'Value');
+                if (element && valueSpan) {
+                    let displayValue = element.value;
+                    
+                    // Formatear el desplazamiento horizontal con solo 1 decimal
+                    if (control === 'phase') {
+                        displayValue = parseFloat(element.value).toFixed(1);
+                    }
+                    
+                    valueSpan.textContent = displayValue;
+                }
+                this.updateFormula();
+            }
+            
+            updateFormula() {
+                const type = document.getElementById('functionType')?.value || 'sin';
+                const A = document.getElementById('amplitude')?.value || '1';
+                const B = document.getElementById('frequency')?.value || '1';
+                const C = parseFloat(document.getElementById('phase')?.value || '0');
+                const D = document.getElementById('vertical')?.value || '0';
+                
+                const functionName = type === 'sin' ? 'sen' : type === 'cos' ? 'cos' : 'tan';
+                
+                // Formatear C: si es 0, mostrar "0", si no, mostrar con 1 decimal
+                const CFormatted = C === 0 ? '0' : C.toFixed(1);
+                
+                const formula = `y = ${A}·${functionName}(${B}(x + ${CFormatted})) + ${D}`;
+                const formulaElement = document.getElementById('currentFormula');
+                if (formulaElement) {
+                    formulaElement.textContent = formula;
+                }
+            }
+            
+            draw() {
+                if (!this.ctx) return;
+                
+                const A = parseFloat(document.getElementById('amplitude')?.value || 1);
+                const B = parseFloat(document.getElementById('frequency')?.value || 1);
+                const C = parseFloat(document.getElementById('phase')?.value || 0);
+                const D = parseFloat(document.getElementById('vertical')?.value || 0);
+                const type = document.getElementById('functionType')?.value || 'sin';
+                
+                this.ctx.clearRect(0, 0, this.width, this.height);
+                
+                // Configurar coordenadas
+                const centerX = this.width / 2;
+                const centerY = this.height / 2;
+                const scaleX = this.width / (4 * Math.PI);
+                const scaleY = this.height / 8;
+                
+                // Dibujar ejes
+                this.drawAxes(centerX, centerY, scaleX, scaleY);
+                
+                // Dibujar función
+                this.drawFunction(type, A, B, C, D, centerX, centerY, scaleX, scaleY);
+            }
+            
+            drawAxes(centerX, centerY, scaleX, scaleY) {
+                this.ctx.strokeStyle = '#333';
+                this.ctx.lineWidth = 1;
+                
+                // Eje X
+                this.ctx.beginPath();
+                this.ctx.moveTo(0, centerY);
+                this.ctx.lineTo(this.width, centerY);
+                this.ctx.stroke();
+                
+                // Eje Y
+                this.ctx.beginPath();
+                this.ctx.moveTo(centerX, 0);
+                this.ctx.lineTo(centerX, this.height);
+                this.ctx.stroke();
+                
+                // Marcas principales en X (π, 2π, etc.)
+                this.ctx.fillStyle = '#333';
+                this.ctx.font = 'bold 12px Arial';
+                this.ctx.textAlign = 'center';
+                
+                for (let i = -2; i <= 2; i++) {
+                    if (i !== 0) {
+                        const x = centerX + i * Math.PI * scaleX;
+                        if (x >= 0 && x <= this.width) {
+                            this.ctx.fillText(i === 1 ? 'π' : i === -1 ? '-π' : i + 'π', x, centerY + 20);
+                            
+                            // Líneas de cuadrícula principales
+                            this.ctx.strokeStyle = '#ccc';
+                            this.ctx.lineWidth = 1;
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(x, 0);
+                            this.ctx.lineTo(x, this.height);
+                            this.ctx.stroke();
+                        }
+                    }
+                }
+                
+                // Marcas secundarias en X (π/2, 3π/2, etc.)
+                this.ctx.fillStyle = '#666';
+                this.ctx.font = '10px Arial';
+                
+                const halfPiValues = [-3, -1, 1, 3]; // Para -3π/2, -π/2, π/2, 3π/2
+                halfPiValues.forEach(i => {
+                    const x = centerX + (i * Math.PI / 2) * scaleX;
+                    if (x >= 0 && x <= this.width && x !== centerX) {
+                        const label = i === 1 ? 'π/2' : i === -1 ? '-π/2' : i === 3 ? '3π/2' : i === -3 ? '-3π/2' : (i/2) + 'π';
+                        this.ctx.fillText(label, x, centerY + 15);
+                        
+                        // Líneas de cuadrícula secundarias
+                        this.ctx.strokeStyle = '#e0e0e0';
+                        this.ctx.lineWidth = 0.5;
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(x, 0);
+                        this.ctx.lineTo(x, this.height);
+                        this.ctx.stroke();
+                    }
+                });
+                
+                // Marcas en Y
+                this.ctx.textAlign = 'right';
+                this.ctx.fillStyle = '#333';
+                this.ctx.font = 'bold 12px Arial';
+                for (let i = -3; i <= 3; i++) {
+                    if (i !== 0) {
+                        const y = centerY - i * scaleY;
+                        if (y >= 0 && y <= this.height) {
+                            this.ctx.fillText(i.toString(), centerX - 8, y + 4);
+                            
+                            // Líneas de cuadrícula horizontales
+                            this.ctx.strokeStyle = '#e0e0e0';
+                            this.ctx.lineWidth = 0.5;
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(0, y);
+                            this.ctx.lineTo(this.width, y);
+                            this.ctx.stroke();
+                        }
+                    }
+                }
+                
+                // Marcar origen
+                this.ctx.fillStyle = '#333';
+                this.ctx.font = 'bold 12px Arial';
+                this.ctx.textAlign = 'right';
+                this.ctx.fillText('0', centerX - 8, centerY + 15);
+            }
+            
+            drawFunction(type, A, B, C, D, centerX, centerY, scaleX, scaleY) {
+                this.ctx.strokeStyle = '#667eea';
+                this.ctx.lineWidth = 3;
+                this.ctx.beginPath();
+                
+                let moveToNext = true;
+                const step = 0.02;
+                
+                for (let x = -2 * Math.PI; x <= 2 * Math.PI; x += step) {
+                    let y;
+                    const transformedX = B * (x + C);
+                    
+                    switch (type) {
+                        case 'sin':
+                            y = A * Math.sin(transformedX) + D;
+                            break;
+                        case 'cos':
+                            y = A * Math.cos(transformedX) + D;
+                            break;
+                        case 'tan':
+                            y = A * Math.tan(transformedX) + D;
+                            // Detectar discontinuidades
+                            if (Math.abs(y) > 20) {
+                                moveToNext = true;
+                                continue;
+                            }
+                            break;
+                        default:
+                            y = A * Math.sin(transformedX) + D;
+                    }
+                    
+                    const canvasX = centerX + x * scaleX;
+                    const canvasY = centerY - y * scaleY;
+                    
+                    // Verificar si el punto está dentro del canvas
+                    if (canvasX >= 0 && canvasX <= this.width && 
+                        canvasY >= -50 && canvasY <= this.height + 50) {
+                        
+                        if (moveToNext) {
+                            this.ctx.moveTo(canvasX, canvasY);
+                            moveToNext = false;
+                        } else {
+                            this.ctx.lineTo(canvasX, canvasY);
+                        }
+                    } else if (!moveToNext) {
+                        moveToNext = true;
+                    }
+                }
+                
+                this.ctx.stroke();
             }
         }
 
-        // Initialize
-        createPianoKeys();
-        createParticles();
-        updateValues();
-        drawWave();
-
-        // Animation loop
-        function animate() {
-            if (!isPlaying) {
-                drawWave();
+        // Función para mostrar mensaje de placeholder
+        function showPlaceholderMessage(type) {
+            let message = '';
+            if (type === 'bilingüismo' || type === 'lectura') {
+                message = '📚 El material de bilingüismo estará disponible próximamente.\n\nAquí encontrarás:\n• Lecturas en inglés sobre trigonometría\n• Ejercicios de comprensión\n• Vocabulario técnico matemático';
+            } else if (type === 'simulacro') {
+                message = '🎯 El simulacro de Pruebas Saber estará disponible próximamente.\n\nIncluirá:\n• Preguntas tipo ICFES\n• Gráficas de funciones trigonométricas\n• Análisis de resultados';
             }
-            requestAnimationFrame(animate);
+            alert(message);
         }
-        animate();
 
-        // Resume audio context on user interaction
-        document.addEventListener('click', () => {
-            if (audioContext.state === 'suspended') {
-                audioContext.resume();
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            // Esperar un poco para asegurar que el DOM esté completamente cargado
+            setTimeout(() => {
+                graphVisualizer = new GraphVisualizer();
+                window.graphVisualizer = graphVisualizer; // Para acceso global
+            }, 100);
+        });
+
+        // Responsive canvas
+        window.addEventListener('resize', () => {
+            if (graphVisualizer) {
+                setTimeout(() => {
+                    graphVisualizer.setupCanvas();
+                    graphVisualizer.draw();
+                }, 100);
             }
         });
     </script>
