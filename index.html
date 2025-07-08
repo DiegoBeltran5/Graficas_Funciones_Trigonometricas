@@ -726,6 +726,177 @@
             color: white;
         }
 
+        /* Estilos para las fórmulas coloridas */
+        .formulas-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .formula-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .formula-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .formula-title {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .formula-content {
+            font-size: 2em;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        /* Colores para cada parámetro */
+        .formula-a {
+            color: #ff6b6b !important;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+            background: rgba(255, 107, 107, 0.1);
+            padding: 5px 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+
+        .formula-b {
+            color: #4ecdc4 !important;
+            text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+            background: rgba(78, 205, 196, 0.1);
+            padding: 5px 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+        }
+
+        .formula-c {
+            color: #ffe66d !important;
+            text-shadow: 0 0 10px rgba(255, 230, 109, 0.5);
+            background: rgba(255, 230, 109, 0.1);
+            padding: 5px 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 230, 109, 0.3);
+        }
+
+        .formula-d {
+            color: #a8e6cf !important;
+            text-shadow: 0 0 10px rgba(168, 230, 207, 0.5);
+            background: rgba(168, 230, 207, 0.1);
+            padding: 5px 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(168, 230, 207, 0.3);
+        }
+
+        .formula-operator, .formula-bracket {
+            color: #ffffff !important;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Estilo para elementos normales (y, sen, x, operadores) */
+        .formula-normal {
+            color: #ffffff !important;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        .legend-basic {
+            color: #999999 !important;
+            text-shadow: 0 0 10px rgba(153, 153, 153, 0.5);
+            background: rgba(153, 153, 153, 0.1);
+            border: 1px solid rgba(153, 153, 153, 0.3);
+        }
+
+        .formula-legend {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .legend-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .legend-row:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+
+        .legend-param {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-right: 15px;
+            min-width: 80px;
+            padding: 5px 8px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .legend-text {
+            color: #ccc;
+            font-size: 0.95em;
+            flex: 1;
+        }
+
+        /* Responsive para fórmulas */
+        @media (max-width: 768px) {
+            .formulas-showcase {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin-bottom: 40px;
+            }
+
+            .formula-content {
+                font-size: 1.4em;
+                padding: 15px;
+                gap: 3px;
+            }
+
+            .formula-card {
+                padding: 20px;
+            }
+
+            .legend-row {
+                flex-direction: column;
+                text-align: center;
+                gap: 8px;
+            }
+
+            .legend-param {
+                min-width: auto;
+                margin-right: 0;
+            }
+        }
+
         .concepts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -804,6 +975,177 @@
                 width: 100%;
                 max-width: 280px;
                 height: auto;
+            }
+        }
+
+        /* Sección de información ampliada */
+        .expanded-info-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+        }
+
+        .info-toggle-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .info-toggle-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 0 auto 15px auto;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .info-toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
+        }
+
+        .toggle-icon {
+            font-size: 1.3em;
+        }
+
+        .toggle-text {
+            flex: 1;
+            text-align: center;
+        }
+
+        .toggle-arrow {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .info-toggle-btn.active .toggle-arrow {
+            transform: rotate(180deg);
+        }
+
+        .info-description {
+            color: #ccc;
+            font-size: 1.1em;
+            margin: 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .expanded-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .expanded-content.active {
+            max-height: 1000px;
+            opacity: 1;
+            margin-top: 30px;
+        }
+
+        .iframe-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .iframe-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .iframe-header h4 {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .iframe-header p {
+            color: #ccc;
+            margin: 0;
+        }
+
+        #mathContentFrame {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .iframe-footer {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .iframe-footer p {
+            color: #ccc;
+            margin: 0;
+            font-size: 0.95em;
+        }
+
+        .external-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .external-link:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive para información ampliada */
+        @media (max-width: 768px) {
+            .info-toggle-btn {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px 25px;
+                font-size: 1em;
+            }
+
+            .toggle-text {
+                text-align: center;
+            }
+
+            #mathContentFrame {
+                height: 500px;
+            }
+
+            .iframe-footer {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .expanded-content.active {
+                max-height: 800px;
             }
         }
     </style>
@@ -892,6 +1234,82 @@
                 Comprende visualmente cada componente
             </h3>
             
+            <!-- Fórmulas con colores -->
+            <div class="formulas-showcase">
+                <div class="formula-card basic-formula">
+                    <h4 class="formula-title">📈 Fórmula Original</h4>
+                    <div class="formula-content">
+                        <span class="formula-part formula-y">y</span>
+                        <span class="formula-operator">=</span>
+                        <span class="formula-function">sen</span>
+                        <span class="formula-bracket">(</span>
+                        <span class="formula-variable">x</span>
+                        <span class="formula-bracket">)</span>
+                    </div>
+                    <div class="formula-legend">
+                        <div class="legend-row">
+                            <span class="legend-param legend-basic">Función básica</span>
+                            <span class="legend-text">= Sin transformaciones</span>
+                        </div>
+                        <div class="legend-row">
+                            <span class="legend-param legend-basic">Amplitud = 1</span>
+                            <span class="legend-text">→ Altura estándar</span>
+                        </div>
+                        <div class="legend-row">
+                            <span class="legend-param legend-basic">Periodo = 2π</span>
+                            <span class="legend-text">→ Ciclo completo normal</span>
+                        </div>
+                        <div class="legend-row">
+                            <span class="legend-param legend-basic">Sin desfase</span>
+                            <span class="legend-text">→ Empieza en el origen</span>
+                        </div>
+                        <div class="legend-row">
+                            <span class="legend-param legend-basic">Sin desplazamiento vertical</span>
+                            <span class="legend-text">→ Centrada en y = 0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="formula-card example-formula">
+                    <h4 class="formula-title">✨ Ejemplo Práctico</h4>
+                    <div class="formula-content">
+                        <span class="formula-part formula-y">y</span>
+                        <span class="formula-operator">=</span>
+                        <span class="formula-part formula-a">2</span>
+                        <span class="formula-operator">·</span>
+                        <span class="formula-function">sen</span>
+                        <span class="formula-bracket">(</span>
+                        <span class="formula-part formula-b">3</span>
+                        <span class="formula-bracket">(</span>
+                        <span class="formula-variable">x</span>
+                        <span class="formula-operator">+</span>
+                        <span class="formula-part formula-c">π/4</span>
+                        <span class="formula-bracket">)</span>
+                        <span class="formula-bracket">)</span>
+                        <span class="formula-operator">+</span>
+                        <span class="formula-part formula-d">1</span>
+                    </div>
+                    <div class="formula-legend">
+                        <div class="legend-row">
+                            <span class="legend-param formula-a">A = 2</span>
+                            <span class="legend-text">→ Amplitud doble</span>
+                        </div>
+                        <div class="legend-row">
+                            <span class="legend-param formula-b">B = 3</span>
+                            <span class="legend-text">→ Periodo = 2π/3</span>
+                        </div>
+                        <div class="legend-row">
+                            <span class="legend-param formula-c">C = π/4</span>
+                            <span class="legend-text">→ Desfase π/4 izquierda</span>
+                        </div>
+                        <div class="legend-row">
+                            <span class="legend-param formula-d">D = 1</span>
+                            <span class="legend-text">→ Subir 1 unidad</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="concepts-grid">
                 <!-- Amplitud -->
                 <div class="concept-card">
@@ -947,6 +1365,48 @@
             </div>
 
 
+        </div>
+    </section>
+
+    <!-- Sección de Información Ampliada -->
+    <section class="expanded-info-section">
+        <div class="container">
+            <div class="info-toggle-container">
+                <button class="info-toggle-btn" onclick="toggleExpandedInfo()">
+                    <span class="toggle-icon">📚</span>
+                    <span class="toggle-text">Ampliar Información: Conceptos Detallados</span>
+                    <span class="toggle-arrow">▼</span>
+                </button>
+                <p class="info-description">
+                    Explora conceptos adicionales y ejemplos detallados sobre amplitud, período, desfase y frecuencia
+                </p>
+            </div>
+            
+            <div class="expanded-content" id="expandedContent">
+                <div class="iframe-container">
+                    <div class="iframe-header">
+                        <h4>📖 Contenido de "Disfruta las Matemáticas"</h4>
+                        <p>Conceptos detallados sobre transformaciones de funciones trigonométricas</p>
+                    </div>
+                    <iframe 
+                        id="mathContentFrame"
+                        src="https://www.disfrutalasmatematicas.com/algebra/amplitud-periodo-desfase-frecuencia.html"
+                        title="Amplitud, Período, Desfase y Frecuencia - Disfruta las Matemáticas"
+                        loading="lazy">
+                        <p>Tu navegador no soporta iframes. 
+                        <a href="https://www.disfrutalasmatematicas.com/algebra/amplitud-periodo-desfase-frecuencia.html" target="_blank">
+                            Visita el enlace directamente aquí
+                        </a></p>
+                    </iframe>
+                    <div class="iframe-footer">
+                        <p>📌 Contenido proporcionado por <strong>Disfruta las Matemáticas</strong></p>
+                        <a href="https://www.disfrutalasmatematicas.com/algebra/amplitud-periodo-desfase-frecuencia.html" 
+                           target="_blank" class="external-link">
+                            Abrir en nueva pestaña ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1190,10 +1650,27 @@
                 // Formatear C: si es 0, mostrar "0", si no, mostrar con 1 decimal
                 const CFormatted = C === 0 ? '0' : C.toFixed(1);
                 
-                const formula = `y = ${A}·${functionName}(${B}(x + ${CFormatted})) + ${D}`;
+                // Crear fórmula colorida con HTML (solo parámetros A,B,C,D coloridos)
+                const coloredFormula = `
+                    <span class="formula-normal">y</span>
+                    <span class="formula-normal"> = </span>
+                    <span class="formula-part formula-a">${A}</span>
+                    <span class="formula-normal">·</span>
+                    <span class="formula-normal">${functionName}</span>
+                    <span class="formula-normal">(</span>
+                    <span class="formula-part formula-b">${B}</span>
+                    <span class="formula-normal">(</span>
+                    <span class="formula-normal">x</span>
+                    <span class="formula-normal"> + </span>
+                    <span class="formula-part formula-c">${CFormatted}</span>
+                    <span class="formula-normal">))</span>
+                    <span class="formula-normal"> + </span>
+                    <span class="formula-part formula-d">${D}</span>
+                `;
+                
                 const formulaElement = document.getElementById('currentFormula');
                 if (formulaElement) {
-                    formulaElement.textContent = formula;
+                    formulaElement.innerHTML = coloredFormula;
                 }
             }
             
@@ -1732,6 +2209,31 @@
                 window.conceptVisualizer = new ConceptVisualizer();
             }, 200);
         });
+
+        // Función para toggle de información expandida
+        function toggleExpandedInfo() {
+            const expandedContent = document.getElementById('expandedContent');
+            const toggleBtn = document.querySelector('.info-toggle-btn');
+            const iframe = document.getElementById('mathContentFrame');
+            
+            if (expandedContent.classList.contains('active')) {
+                // Colapsar
+                expandedContent.classList.remove('active');
+                toggleBtn.classList.remove('active');
+            } else {
+                // Expandir
+                expandedContent.classList.add('active');
+                toggleBtn.classList.add('active');
+                
+                // Opcional: Recargar iframe si es necesario
+                setTimeout(() => {
+                    if (iframe && !iframe.src.includes('?reloaded')) {
+                        // Agregar parámetro para evitar recargas innecesarias
+                        iframe.src = iframe.src + '?embedded=true';
+                    }
+                }, 500);
+            }
+        }
     </script>
 </body>
 </html>
